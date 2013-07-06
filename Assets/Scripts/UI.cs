@@ -232,8 +232,9 @@ public static class UI {
 			
 	}
 
-	public static void UpdatePlayer (Mobs myPlayer) {
-		
+	public static void UpdatePlayer (Mobs Player) {
+		_PlayerHP.text = "HP:" + Player.CurHP + "/" + Player.MaxHP;
+		_PlayerMP.text = "MP:" + Player.CurMP + "/" + Player.MaxMP;
 	}
 
 	public static void UpdateEnemyHealth (Mobs Enemy)	{

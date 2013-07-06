@@ -42,5 +42,10 @@ public static class MovesManager
 		target.Defense--;  // wobbles cause target to have lowered defenses
 	}
   }
+	
+	
+	
+	
+	
 }
  
