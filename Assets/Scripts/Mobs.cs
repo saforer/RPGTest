@@ -40,7 +40,7 @@ public class Mobs : FSprite {
 			CurHP = 40;
 			MaxMP = 10;
 			CurMP = 10;
-			Damage = 1;
+			Damage = 3;
 			Defense = 1;
 			moveList = new List<Moves>();
     		moveList.Add(Moves.Attack);

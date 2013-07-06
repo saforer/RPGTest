@@ -25,18 +25,18 @@ public class RPGBattlePage : RPGPage {
 		//Draw Enemy
 		DrawEnemy(MyEnemy);
 		//Draw UI
-		FContainer _UI = new FContainer();
+		_UI = new FContainer();
 		_UI.AddChild (UI.DrawPlayer (MyPlayer));
 		_UI.AddChild (UI.DrawInfoBox (MyEnemy));
 		_UI.AddChild (UI.DrawMessageBox());
-		_UI.AddChild (UI.DrawMenuBox());
+		_UI.AddChild (UI.DrawMenuBox(true));
 		_UI.AddChild (UI.DrawHealthBar (MyEnemy));
 		_UI.AddChild (UI.SubMenuBox());
 		
 		UI._AttackButton.SignalRelease += HandleUI_AttackButtonSignalRelease;
 		UI._MetaButton.SignalRelease += HandleUI_MetaButtonSignalRelease;
 		UI._TestButton.SignalRelease += HandleUI_TestButtonSignalRelease;
-		
+	
 		
 		AddChild (_UI);
 	}
@@ -71,12 +71,12 @@ public class RPGBattlePage : RPGPage {
 		}
 		
 		if(MyEnemy.CurHP == 0&&!Paused) {
-			YouWin(MyEnemy);
+			YouWin(_EnemySprite, MyEnemy);
 			Paused = true;
 		}
 		
 		if (MyPlayer.CurHP == 0&&!Paused) {
-			YouDed(MyPlayer);
+			YouDed();
 			Paused = true;
 		}
 		
@@ -94,14 +94,15 @@ public class RPGBattlePage : RPGPage {
 		boolYourTurn = true;
 	}
 
-	static void YouWin (Mobs Enemy)
-	{
-		Enemy.SetElementByName ("Dead");
+	void YouWin (FSprite _EnemySprite, Mobs MyEnemy)	{
+		_EnemySprite.SetElementByName ("Dead");
+		UI._MenuBox.isVisible = false;
+		UI.AddMessage ("Killed",MyEnemy.name + "has died.");
 	}
 
-	static void YouDed (Mobs Player)
-	{
-		Player.SetElementByName ("Dead");
+	void YouDed ()	{
+		UI._MenuBox.isVisible = false;
+		UI.AddMessage ("Dead","You have died");
 	}
 	
 	
@@ -109,19 +110,19 @@ public class RPGBattlePage : RPGPage {
 	
 
 	void HandleUI_TestButtonSignalRelease (FButton button)	{
-		if(boolYourTurn) {
+		if(boolYourTurn&&!Paused) {
 			MovesManager.Wobble (MyPlayer,MyEnemy);
-			if(!UI._SubMenu.isVisible) {
-			UI._SubMenu.isVisible=true;
-			} else {
+			boolEnemyTurn=true;
+			boolYourTurn=false;
 			UI._SubMenu.isVisible=false;
-			}	
+				
+			
 			
 		}
 	}
 
 	void HandleUI_AttackButtonSignalRelease (FButton Attack) {
-		if(boolYourTurn) {
+		if(boolYourTurn&&!Paused) {
 			if(UI._SubMenu.isVisible) {
 			UI._SubMenu.isVisible=false;
 			} else {
@@ -133,7 +134,7 @@ public class RPGBattlePage : RPGPage {
 	}
 	
 		void HandleUI_MetaButtonSignalRelease (FButton Meta)	{
-		if(boolYourTurn) {
+		if(boolYourTurn&&!Paused) {
 			if(!UI._SubMenu.isVisible) {
 			UI._SubMenu.isVisible=true;
 			} else {
@@ -154,6 +155,8 @@ public class RPGBattlePage : RPGPage {
 		base.HandleRemovedFromStage();
 	}
 	
+		
+		
 }
 
 

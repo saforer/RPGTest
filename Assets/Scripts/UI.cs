@@ -25,6 +25,14 @@ public static class UI {
 	public static FContainer _EHealthBar;
 	public static FSprite _EHealthBack;
 	public static FSprite _EHealthFill;
+	public static FContainer _MessageBox;
+	public static FSprite _MessageBackground;
+	public static FContainer _MenuBox;
+	private static List<FContainer> messageList = new List<FContainer>();
+	
+	const int MaxMessages = 3;
+	
+	
 	
 	
 	public static FContainer DrawPlayer(Mobs Player) {
@@ -34,7 +42,7 @@ public static class UI {
 		_PBackground = new FSprite("UIPlayerBackground");
 		
 		//Make the player sprite
-		FSprite _PlayerSprite = new FSprite(Player.name);
+		_PlayerSprite = new FSprite(Player.name);
 		
 		//Make a holder for the player's name info
 		FContainer _PlayerName = new FContainer();
@@ -77,8 +85,8 @@ public static class UI {
 	
 	public static FButton _AttackButton;
 	public static FButton _MetaButton;
-	public static FContainer DrawMenuBox() {
-		FContainer _MenuBox = new FContainer();
+	public static FContainer DrawMenuBox(bool Draw) {
+		_MenuBox = new FContainer();
 		
 		FSprite _MenuBackground = new FSprite("MenuBox");
 		
@@ -102,6 +110,8 @@ public static class UI {
 		_MenuBox.AddChild (_MenuBackground);
 		_MenuBox.AddChild (_AttackButton);
 		_MenuBox.AddChild (_MetaButton);
+		
+		_MenuBox.isVisible = Draw;
 		
 		return _MenuBox;
 	}
@@ -185,9 +195,9 @@ public static class UI {
 	}
 	
 	public static FContainer DrawMessageBox() {
-		FContainer _MessageBox = new FContainer();
+		_MessageBox = new FContainer();
 		
-		FSprite _MessageBackground = new FSprite("MessageBox");
+		_MessageBackground = new FSprite("MessageBox");
 		
 		_MessageBox.AddChild (_MessageBackground);
 		
@@ -235,9 +245,61 @@ public static class UI {
 	public static void UpdatePlayer (Mobs Player) {
 		_PlayerHP.text = "HP:" + Player.CurHP + "/" + Player.MaxHP;
 		_PlayerMP.text = "MP:" + Player.CurMP + "/" + Player.MaxMP;
+		
+		if (Player.CurHP == 0) {
+		_PlayerSprite.SetElementByName("Dead");	
+		}
 	}
 
 	public static void UpdateEnemyHealth (Mobs Enemy)	{
 		_EHealthFill.scaleX = ((float) Enemy.CurHP / (float) Enemy.MaxHP);
+	}
+	
+	
+	public static void AddMessage (string Title, string Text) {
+			
+		FContainer _MessageToAdd = new FContainer();
+		FSprite _LabelBackground = new FSprite("Message");
+		FLabel _MessageTitle = new FLabel("Normal",Title);
+		FLabel _MessageText = new FLabel("MessageText",Text);
+		
+		
+		foreach(FContainer message in messageList) {
+			
+			message.x+=277;
+			
+		}
+		
+		
+		if (messageList.Count > MaxMessages) {
+				FContainer removeMessage = messageList[0];
+
+				_MessageBox.RemoveChild (removeMessage);
+				
+				messageList.RemoveAt (0);
+				
+			}
+		
+		messageList.Add (_MessageToAdd);
+		
+		
+		_MessageTitle.anchorX=0;
+		_MessageText.anchorX=0;
+		
+		_MessageTitle.x = -130;
+		_MessageText.x = -130;
+		
+		_MessageTitle.y = 40;
+		_MessageText.y = 0;
+		
+		
+		_MessageToAdd.AddChild(_LabelBackground);
+		_MessageToAdd.AddChild(_MessageTitle);
+		_MessageToAdd.AddChild(_MessageText);
+		
+		_MessageToAdd.x=-270;
+		
+		_MessageBox.AddChild (_MessageToAdd);
+		
 	}
 }
