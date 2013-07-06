@@ -17,6 +17,7 @@ public class Mobs : FSprite {
 	public int CurMP;
 	public int Damage;
 	public int Defense;
+	public List<Moves> moveList;
 	
 	public Mobs (ValidMobs Name) {
 		
@@ -29,15 +30,21 @@ public class Mobs : FSprite {
 			CurMP = 10;
 			Damage = 2;
 			Defense = 5;
+			moveList = new List<Moves>();
+    		moveList.Add(Moves.Attack);
+    		moveList.Add(Moves.Wobble);
 			break;
 			case ValidMobs.Player:
-			name = "Player";
+			name = "Sniper";
 			MaxHP = 40;
 			CurHP = 40;
 			MaxMP = 10;
 			CurMP = 10;
 			Damage = 1;
 			Defense = 1;
+			moveList = new List<Moves>();
+    		moveList.Add(Moves.Attack);
+    		moveList.Add(Moves.Wobble);
 			break;
 		}
 	}
