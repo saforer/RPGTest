@@ -2,7 +2,7 @@
 
 "Dead.png":
 {
-	"frame": {"x":131,"y":3,"w":34,"h":34},
+	"frame": {"x":3,"y":3,"w":34,"h":34},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":34},
@@ -10,7 +10,7 @@
 },
 "Enemy.png":
 {
-	"frame": {"x":167,"y":3,"w":34,"h":34},
+	"frame": {"x":39,"y":3,"w":34,"h":34},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":34},
@@ -18,7 +18,7 @@
 },
 "ForestBackground.png":
 {
-	"frame": {"x":993,"y":494,"w":1024,"h":768},
+	"frame": {"x":75,"y":3,"w":1024,"h":768},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":1024,"h":768},
@@ -26,7 +26,7 @@
 },
 "Health.png":
 {
-	"frame": {"x":203,"y":3,"w":200,"h":50},
+	"frame": {"x":1101,"y":3,"w":200,"h":50},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":50},
@@ -34,7 +34,7 @@
 },
 "HealthBar.png":
 {
-	"frame": {"x":405,"y":3,"w":200,"h":50},
+	"frame": {"x":1303,"y":3,"w":200,"h":50},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":200,"h":50},
@@ -42,7 +42,7 @@
 },
 "InfoBox.png":
 {
-	"frame": {"x":519,"y":136,"w":281,"h":356},
+	"frame": {"x":1505,"y":3,"w":281,"h":356},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":281,"h":356},
@@ -50,7 +50,7 @@
 },
 "Knight.png":
 {
-	"frame": {"x":31,"y":3,"w":26,"h":26},
+	"frame": {"x":1788,"y":3,"w":26,"h":26},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":26},
@@ -58,7 +58,7 @@
 },
 "MenuBox.png":
 {
-	"frame": {"x":802,"y":136,"w":281,"h":356},
+	"frame": {"x":3,"y":773,"w":281,"h":356},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":281,"h":356},
@@ -66,7 +66,7 @@
 },
 "MenuButtonOff.png":
 {
-	"frame": {"x":607,"y":3,"w":281,"h":52},
+	"frame": {"x":286,"y":773,"w":281,"h":52},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":281,"h":52},
@@ -74,7 +74,7 @@
 },
 "MenuButtonOn.png":
 {
-	"frame": {"x":890,"y":3,"w":281,"h":52},
+	"frame": {"x":569,"y":773,"w":281,"h":52},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":281,"h":52},
@@ -82,7 +82,7 @@
 },
 "Message.png":
 {
-	"frame": {"x":1173,"y":3,"w":281,"h":131},
+	"frame": {"x":852,"y":773,"w":281,"h":131},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":281,"h":131},
@@ -90,7 +90,7 @@
 },
 "MessageBox.png":
 {
-	"frame": {"x":3,"y":494,"w":988,"h":131},
+	"frame": {"x":3,"y":1131,"w":988,"h":131},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":988,"h":131},
@@ -98,7 +98,7 @@
 },
 "MessageText_0.png":
 {
-	"frame": {"x":3,"y":136,"w":256,"h":256},
+	"frame": {"x":993,"y":1131,"w":256,"h":256},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
@@ -106,15 +106,15 @@
 },
 "Normal_0.png":
 {
-	"frame": {"x":261,"y":136,"w":256,"h":256},
+	"frame": {"x":1251,"y":1131,"w":256,"h":512},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":256},
-	"sourceSize": {"w":256,"h":256}
+	"spriteSourceSize": {"x":0,"y":0,"w":256,"h":512},
+	"sourceSize": {"w":256,"h":512}
 },
 "Player.png":
 {
-	"frame": {"x":59,"y":3,"w":34,"h":34},
+	"frame": {"x":1509,"y":1131,"w":34,"h":34},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":34},
@@ -122,7 +122,7 @@
 },
 "Skeleton.png":
 {
-	"frame": {"x":95,"y":3,"w":34,"h":34},
+	"frame": {"x":1545,"y":1131,"w":34,"h":34},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":34},
@@ -130,7 +130,7 @@
 },
 "Sniper.png":
 {
-	"frame": {"x":3,"y":3,"w":26,"h":26},
+	"frame": {"x":1581,"y":1131,"w":26,"h":26},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":26,"h":26},
@@ -138,7 +138,7 @@
 },
 "TitleBackground.png":
 {
-	"frame": {"x":3,"y":1264,"w":1024,"h":768},
+	"frame": {"x":3,"y":1645,"w":1024,"h":768},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":1024,"h":768},
@@ -146,7 +146,7 @@
 },
 "TitleLogo.png":
 {
-	"frame": {"x":1085,"y":136,"w":824,"h":194},
+	"frame": {"x":1029,"y":1645,"w":824,"h":194},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":824,"h":194},
@@ -154,7 +154,7 @@
 },
 "UIPlayerBackground.png":
 {
-	"frame": {"x":1456,"y":3,"w":345,"h":101},
+	"frame": {"x":3,"y":2415,"w":345,"h":101},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":345,"h":101},
@@ -165,8 +165,8 @@
 	"version": "1.0",
 	"image": "RPGAtlas.png",
 	"format": "RGBA8888",
-	"size": {"w":2048,"h":2048},
+	"size": {"w":2048,"h":4096},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c3af61713464f12d81476fb0c9d13242$"
+	"smartupdate": "$TexturePacker:SmartUpdate:4d6b0b997dafba649a837ada9cd869db$"
 }
 }

@@ -10,7 +10,7 @@ public class RPGBattlePage : RPGPage {
 	public FContainer _UI;
 	bool boolYourTurn = true;
 	bool boolEnemyTurn = false;
-	public int Framecount;
+	public static int Framecount;
 	bool Paused = false;
 	
 	
@@ -19,9 +19,9 @@ public class RPGBattlePage : RPGPage {
 		DrawBackground();
 		
 		//construct player
-		MyPlayer = new Mobs(ValidMobs.Player);
+		ConstructPlayer();
 		//construct enemy
-		MyEnemy = new Mobs(ValidMobs.Knight);
+		ConstructEnemy();
 		//Draw Enemy
 		DrawEnemy(MyEnemy);
 		//Draw UI
@@ -35,7 +35,7 @@ public class RPGBattlePage : RPGPage {
 		
 		UI._AttackButton.SignalRelease += HandleUI_AttackButtonSignalRelease;
 		UI._MetaButton.SignalRelease += HandleUI_MetaButtonSignalRelease;
-		UI._TestButton.SignalRelease += HandleUI_TestButtonSignalRelease;
+		UI._SubButton1.SignalRelease += HandleUI_SubButton1SignalRelease;
 	
 		
 		AddChild (_UI);
@@ -70,12 +70,14 @@ public class RPGBattlePage : RPGPage {
 		EnemyTurn(MyEnemy);
 		}
 		
-		if(MyEnemy.CurHP == 0&&!Paused) {
+		if(MyEnemy.CurHP <= 0&&!Paused) {
+			MyEnemy.CurHP = 0;
 			YouWin(_EnemySprite, MyEnemy);
 			Paused = true;
 		}
 		
-		if (MyPlayer.CurHP == 0&&!Paused) {
+		if (MyPlayer.CurHP <= 0&&!Paused) {
+			MyPlayer.CurHP = 0;
 			YouDed();
 			Paused = true;
 		}
@@ -104,12 +106,35 @@ public class RPGBattlePage : RPGPage {
 		UI._MenuBox.isVisible = false;
 		UI.AddMessage ("Dead","You have died");
 	}
+
+	public void ConstructPlayer ()
+	{
+		MyPlayer = new Mobs(ValidMobs.Player);
+	}
+
+	public void ConstructEnemy ()
+	{	
+		const int MaxEnum = 3;
+		int n = UnityEngine.Random.Range (0,MaxEnum);
+		Debug.Log (n);
+		switch (n) {
+		case 0:
+			MyEnemy = new Mobs(ValidMobs.Sniper);
+			break;
+		case 1:	
+			MyEnemy = new Mobs(ValidMobs.Knight);
+			break;
+		case 2:
+			MyEnemy = new Mobs(ValidMobs.Skeleton);
+			break;
+		}
+	}
 	
 	
 	
 	
 
-	void HandleUI_TestButtonSignalRelease (FButton button)	{
+	void HandleUI_SubButton1SignalRelease (FButton button)	{
 		if(boolYourTurn&&!Paused) {
 			MovesManager.Wobble (MyPlayer,MyEnemy);
 			boolEnemyTurn=true;

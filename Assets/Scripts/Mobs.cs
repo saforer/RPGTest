@@ -4,8 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum ValidMobs {
-	Player,
-	Knight
+	Knight,
+	Sniper,
+	Skeleton,
+	Player
 }
 
 public class Mobs : FSprite {
@@ -22,30 +24,60 @@ public class Mobs : FSprite {
 	public Mobs (ValidMobs Name) {
 		
 		switch (Name) {
+				
+				
 			case ValidMobs.Knight:
-			name = "Knight";
-			MaxHP = 20;
-			CurHP = 20;
-			MaxMP = 10;
-			CurMP = 10;
-			Damage = 2;
-			Defense = 5;
-			moveList = new List<Moves>();
-    		moveList.Add(Moves.Attack);
-    		moveList.Add(Moves.Wobble);
-			break;
+				name = "Knight";
+				MaxHP = 20;
+				CurHP = 20;
+				MaxMP = 10;
+				CurMP = 10;
+				Damage = 2;
+				Defense = 5;
+				moveList = new List<Moves>();
+	    		moveList.Add(Moves.Attack);
+	    		moveList.Add(Moves.Wobble);
+				break;
+				
+			case ValidMobs.Sniper:
+				name = "Sniper";
+				MaxHP = 20;
+				CurHP = 20;
+				MaxMP = 10;
+				CurMP = 10;
+				Damage = 5;
+				Defense = 2;
+				moveList = new List<Moves>();
+	    		moveList.Add(Moves.Attack);
+				break;
+				
+			case ValidMobs.Skeleton:
+				name = "Skeleton";
+				MaxHP = 10;
+				CurHP = 10;
+				MaxMP = 2;
+				CurMP = 2;
+				Damage = 7;
+				Defense = 3;
+				moveList = new List<Moves>();
+	    		moveList.Add(Moves.Attack);
+	    		moveList.Add(Moves.Wobble);
+				break;
+				
 			case ValidMobs.Player:
-			name = "Sniper";
-			MaxHP = 40;
-			CurHP = 40;
-			MaxMP = 10;
-			CurMP = 10;
-			Damage = 3;
-			Defense = 1;
-			moveList = new List<Moves>();
-    		moveList.Add(Moves.Attack);
-    		moveList.Add(Moves.Wobble);
-			break;
+				name = "Sniper";
+				MaxHP = 40;
+				CurHP = 40;
+				MaxMP = 10;
+				CurMP = 10;
+				Damage = 3;
+				Defense = 1;
+				moveList = new List<Moves>();
+	    		moveList.Add(Moves.Attack);
+	    		moveList.Add(Moves.Wobble);
+				break;
+				
+				
 		}
 	}
 }

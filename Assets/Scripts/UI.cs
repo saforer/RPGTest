@@ -28,9 +28,9 @@ public static class UI {
 	public static FContainer _MessageBox;
 	public static FSprite _MessageBackground;
 	public static FContainer _MenuBox;
-	private static List<FContainer> messageList = new List<FContainer>();
+	public static List<FContainer> messageList = new List<FContainer>();
 	
-	const int MaxMessages = 3;
+	public const int MaxMessages = 2;
 	
 	
 	
@@ -46,11 +46,15 @@ public static class UI {
 		
 		//Make a holder for the player's name info
 		FContainer _PlayerName = new FContainer();
+		
 		//Make the players name info & move it to the good spot
 		_PlayerFName = new FLabel("Normal", "Johnny");
+		_PlayerFName.color = Color.black;
 		_PlayerFName.y = 20;
 		_PlayerLName = new FLabel("Normal", "Dergen");
+		_PlayerLName.color = Color.black;
 		_PlayerLName.y = -20;
+		
 		//Add the name info to the name box
 		_PlayerName.AddChild (_PlayerFName);
 		_PlayerName.AddChild (_PlayerLName);
@@ -60,8 +64,12 @@ public static class UI {
 		//Make the players health info & move it to the good spot
 		_PlayerHP = new FLabel("Normal", "HP:" + Player.CurHP + "/" + Player.MaxHP);
 		_PlayerHP.y = 20;
+		_PlayerHP.color = Color.red;
+		
 		_PlayerMP = new FLabel("Normal", "MP:" + Player.CurMP + "/" + Player.MaxMP);
 		_PlayerMP.y = -20;
+		_PlayerMP.color = Color.blue;
+		
 		//Add the health info to the health info box
 		_PlayerInfo.AddChild (_PlayerHP);
 		_PlayerInfo.AddChild (_PlayerMP);
@@ -100,7 +108,7 @@ public static class UI {
 
 		_MetaButton.AddLabel("Normal","MetaMagic",Color.black);
 		_MetaButton.anchorY=1;
-		_MetaButton.y= 178 - 50;
+		_MetaButton.y= 178 - 48;
 		
 		
 		//Manipulate elements
@@ -178,6 +186,12 @@ public static class UI {
 		_EDam.anchorX=0;		
 		_EDef.anchorX=0;
 		
+		_ECurHP.color = Color.black;		
+		_ECurMP.color = Color.black;		
+		_EMaxHP.color = Color.black;		
+		_EMaxMP.color = Color.black;		
+		_EDam.color = Color.black;		
+		_EDef.color = Color.black;
 		
 		_InfoBox.AddChild(_InfoBackground);
 		
@@ -209,21 +223,21 @@ public static class UI {
 	public static FContainer _SubMenu;
 	
 	
-	public static FButton _TestButton;
+	public static FButton _SubButton1;
 	public static FContainer SubMenuBox() {
 		
 		_SubMenu = new FContainer();
 		
 		FSprite _SubBackground = new FSprite("MenuBox");
 		
-		_TestButton = new FButton("MenuButtonOff","MenuButtonOn");
-		_TestButton.AddLabel ("Normal","Wobble",Color.black);
-		_TestButton.anchorY = 1;
-		_TestButton.y= 178 - 50;
+		_SubButton1 = new FButton("MenuButtonOff","MenuButtonOn");
+		_SubButton1.AddLabel ("Normal","Wobble",Color.black);
+		_SubButton1.anchorY = 1;
+		_SubButton1.y= 178;
 		
 		
 		_SubMenu.AddChild (_SubBackground);
-		_SubMenu.AddChild (_TestButton);
+		_SubMenu.AddChild (_SubButton1);
 		
 		_SubMenu.x=-73;
 		_SubMenu.isVisible = false;
@@ -243,6 +257,8 @@ public static class UI {
 	}
 
 	public static void UpdatePlayer (Mobs Player) {
+		_PlayerHP.color = Color.red;
+		_PlayerMP.color = Color.blue;
 		_PlayerHP.text = "HP:" + Player.CurHP + "/" + Player.MaxHP;
 		_PlayerMP.text = "MP:" + Player.CurMP + "/" + Player.MaxMP;
 		
@@ -282,6 +298,8 @@ public static class UI {
 		
 		messageList.Add (_MessageToAdd);
 		
+		_MessageTitle.color = Color.black;
+		_MessageText.color = Color.black;
 		
 		_MessageTitle.anchorX=0;
 		_MessageText.anchorX=0;
