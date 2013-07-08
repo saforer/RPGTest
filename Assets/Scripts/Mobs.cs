@@ -80,4 +80,8 @@ public class Mobs : FSprite {
 				
 		}
 	}
+	
+	public Mobs () {
+			
+	}
 }
