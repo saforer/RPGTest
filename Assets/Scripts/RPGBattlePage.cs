@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class RPGBattlePage : RPGPage {
 	
-	public Mobs MyPlayer;	
+	public Player MyPlayer;	
 	public Mobs MyEnemy;
 	public FContainer _UI;
 	bool boolYourTurn = true;
@@ -85,13 +85,16 @@ public class RPGBattlePage : RPGPage {
 	}
 	
 	void EnemyTurn(Mobs Enemy) {
-		//Get how many moves he can use
-		int Max = Enemy.moveList.Count;
+		
+		
+		
+		
 		//Get what move he should do out of the list
-		int MoveToUse = UnityEngine.Random.Range (0,Max);
+		int MoveToUse = FindMoveToUse(MyEnemy,MyPlayer);
 		//actually use the move.
+		Debug.Log(MoveToUse);
 			MovesManager.PerformMove (MyEnemy,MyPlayer,Enemy.moveList[MoveToUse]);
-			Debug.Log (Enemy.moveList[MoveToUse]);
+		
 		boolEnemyTurn = false;
 		boolYourTurn = true;
 	}
@@ -99,22 +102,21 @@ public class RPGBattlePage : RPGPage {
 	void YouWin (FSprite _EnemySprite, Mobs MyEnemy)	{
 		_EnemySprite.SetElementByName ("Dead");
 		UI._MenuBox.isVisible = false;
-		UI.AddMessage ("Killed",MyEnemy.name + "has died.");
+		UI.AddMessage ("Killed",MyEnemy.name + " has died.");
 	}
 
 	void YouDed ()	{
 		UI._MenuBox.isVisible = false;
-		UI.AddMessage ("Dead","You have died");
+		UI.AddMessage ("Dead",MyPlayer.FName + " has died");
 	}
 
-	public void ConstructPlayer ()
-	{
-		MyPlayer = new Mobs(ValidMobs.Player);
+	public void ConstructPlayer () {
+		MyPlayer = new Player();
 	}
 
 	public void ConstructEnemy ()
 	{	
-		const int MaxEnum = 3;
+		int MaxEnum = Enum.GetNames(typeof(ValidMobs)).Length;
 		int n = UnityEngine.Random.Range (0,MaxEnum);
 		Debug.Log (n);
 		switch (n) {
@@ -130,10 +132,6 @@ public class RPGBattlePage : RPGPage {
 		}
 	}
 	
-	
-	
-	
-
 	void HandleUI_SubButton1SignalRelease (FButton button)	{
 		if(boolYourTurn&&!Paused) {
 			MovesManager.Wobble (MyPlayer,MyEnemy);
@@ -181,6 +179,23 @@ public class RPGBattlePage : RPGPage {
 	}
 	
 		
+	
+	int FindMoveToUse(Mobs MyEnemy, Mobs MyPlayer) {
+		int MoveToUse = 0;
+		
+		foreach (Moves name in MyEnemy.moveList) {
+			 int Weight = MyEnemy.weightList[MoveToUse];
+			int Rand = UnityEngine.Random.Range (0,100);
+			if (Weight>Rand) {
+				break;
+			}		
+			
+			MoveToUse++;
+		}
+		
+		return MoveToUse;
+		
+	}
 		
 }
 

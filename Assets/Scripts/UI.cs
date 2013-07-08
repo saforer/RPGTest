@@ -35,7 +35,7 @@ public static class UI {
 	
 	
 	
-	public static FContainer DrawPlayer(Mobs Player) {
+	public static FContainer DrawPlayer(Player Player) {
 		
 		//Make the background!
 		_PlayerBox = new FContainer();
@@ -48,10 +48,10 @@ public static class UI {
 		FContainer _PlayerName = new FContainer();
 		
 		//Make the players name info & move it to the good spot
-		_PlayerFName = new FLabel("Normal", "Johnny");
+		_PlayerFName = new FLabel("Normal", Player.FName);
 		_PlayerFName.color = Color.black;
 		_PlayerFName.y = 20;
-		_PlayerLName = new FLabel("Normal", "Dergen");
+		_PlayerLName = new FLabel("Normal", Player.LName);
 		_PlayerLName.color = Color.black;
 		_PlayerLName.y = -20;
 		
