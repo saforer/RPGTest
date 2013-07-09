@@ -31,11 +31,17 @@ public class RPGBattlePage : RPGPage {
 		_UI.AddChild (UI.DrawMessageBox());
 		_UI.AddChild (UI.DrawMenuBox(true));
 		_UI.AddChild (UI.DrawHealthBar (MyEnemy));
-		_UI.AddChild (UI.SubMenuBox());
+		_UI.AddChild (UI.SubMenuBox("Wobble", "Dance", "Sing", "Eat", "Fart"));
 		
 		UI._AttackButton.SignalRelease += HandleUI_AttackButtonSignalRelease;
 		UI._MetaButton.SignalRelease += HandleUI_MetaButtonSignalRelease;
 		UI._SubButton1.SignalRelease += HandleUI_SubButton1SignalRelease;
+		UI._SubButton2.SignalRelease += HandleUI_SubButton2SignalRelease;
+		UI._SubButton3.SignalRelease += HandleUI_SubButton3SignalRelease;
+		UI._SubButton4.SignalRelease += HandleUI_SubButton4SignalRelease;
+		UI._SubButton5.SignalRelease += HandleUI_SubButton5SignalRelease;
+		
+		
 	
 		
 		AddChild (_UI);
@@ -132,7 +138,55 @@ public class RPGBattlePage : RPGPage {
 		}
 	}
 	
-	void HandleUI_SubButton1SignalRelease (FButton button)	{
+	void HandleUI_SubButton1SignalRelease (FButton B1)	{
+		if(boolYourTurn&&!Paused) {
+			MovesManager.Wobble (MyPlayer,MyEnemy);
+			boolEnemyTurn=true;
+			boolYourTurn=false;
+			UI._SubMenu.isVisible=false;
+				
+			
+			
+		}
+	}
+	
+		void HandleUI_SubButton2SignalRelease (FButton b2)	{
+		if(boolYourTurn&&!Paused) {
+			MovesManager.Wobble (MyPlayer,MyEnemy);
+			boolEnemyTurn=true;
+			boolYourTurn=false;
+			UI._SubMenu.isVisible=false;
+				
+			
+			
+		}
+	}
+	
+		void HandleUI_SubButton3SignalRelease (FButton b3)	{
+		if(boolYourTurn&&!Paused) {
+			MovesManager.Wobble (MyPlayer,MyEnemy);
+			boolEnemyTurn=true;
+			boolYourTurn=false;
+			UI._SubMenu.isVisible=false;
+				
+			
+			
+		}
+	}
+	
+		void HandleUI_SubButton4SignalRelease (FButton b4)	{
+		if(boolYourTurn&&!Paused) {
+			MovesManager.Wobble (MyPlayer,MyEnemy);
+			boolEnemyTurn=true;
+			boolYourTurn=false;
+			UI._SubMenu.isVisible=false;
+				
+			
+			
+		}
+	}
+	
+		void HandleUI_SubButton5SignalRelease (FButton Button5)	{
 		if(boolYourTurn&&!Paused) {
 			MovesManager.Wobble (MyPlayer,MyEnemy);
 			boolEnemyTurn=true;

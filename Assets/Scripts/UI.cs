@@ -224,20 +224,45 @@ public static class UI {
 	
 	
 	public static FButton _SubButton1;
-	public static FContainer SubMenuBox() {
+	public static FButton _SubButton2;
+	public static FButton _SubButton3;
+	public static FButton _SubButton4;
+	public static FButton _SubButton5;
+	public static FContainer SubMenuBox(string TextButton1, string TextButton2, string TextButton3, string TextButton4, string TextButton5) {
 		
 		_SubMenu = new FContainer();
 		
 		FSprite _SubBackground = new FSprite("MenuBox");
 		
 		_SubButton1 = new FButton("MenuButtonOff","MenuButtonOn");
-		_SubButton1.AddLabel ("Normal","Wobble",Color.black);
+		_SubButton1.AddLabel ("Normal",TextButton1,Color.black);
 		_SubButton1.anchorY = 1;
 		_SubButton1.y= 178;
+		_SubButton2 = new FButton("MenuButtonOff","MenuButtonOn");
+		_SubButton2.AddLabel ("Normal",TextButton2,Color.black);
+		_SubButton2.anchorY = 1;
+		_SubButton2.y= 128;
+		_SubButton3 = new FButton("MenuButtonOff","MenuButtonOn");
+		_SubButton3.AddLabel ("Normal",TextButton3,Color.black);
+		_SubButton3.anchorY = 1;
+		_SubButton3.y= 78;
+		_SubButton4 = new FButton("MenuButtonOff","MenuButtonOn");
+		_SubButton4.AddLabel ("Normal",TextButton4,Color.black);
+		_SubButton4.anchorY = 1;
+		_SubButton4.y= 28;
+		_SubButton5 = new FButton("MenuButtonOff","MenuButtonOn");
+		_SubButton5.AddLabel ("Normal",TextButton5,Color.black);
+		_SubButton5.anchorY = 1;
+		_SubButton5.y= 28 - 50;
+		
 		
 		
 		_SubMenu.AddChild (_SubBackground);
 		_SubMenu.AddChild (_SubButton1);
+		_SubMenu.AddChild (_SubButton2);
+		_SubMenu.AddChild (_SubButton3);
+		_SubMenu.AddChild (_SubButton4);
+		_SubMenu.AddChild (_SubButton5);
 		
 		_SubMenu.x=-73;
 		_SubMenu.isVisible = false;

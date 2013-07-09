@@ -1,6 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Mobs.cs">
+    <Files>
+      <File FileName="Assets\Scripts\RPGMain.cs" Line="58" Column="1" />
+      <File FileName="Assets\Scripts\RPGBattlePage.cs" Line="183" Column="1" />
+      <File FileName="Assets\Scripts\UI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\MoveManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Mobs.cs" Line="56" Column="29" />
+      <File FileName="Assets\Scripts\Players.cs" Line="14" Column="17" />
+      <File FileName="Assets\Futile\Core\FAtlasManager.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
