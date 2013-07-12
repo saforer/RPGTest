@@ -3,6 +3,13 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum MenuOptions {
+	Attack,
+	Skills,
+	MetaMagic,
+	Items,
+	Run
+}
 
 public static class UI {
 	
@@ -32,8 +39,25 @@ public static class UI {
 	
 	public const int MaxMessages = 2;
 	
+	public static FContainer _AttackContainer;
+	public static FSprite _AttackBackground;
+	public static FLabel _AttackText;
 	
+	public static FContainer _SkillContainer;
+	public static FSprite _SkillBackground;
+	public static FLabel _SkillText;
 	
+	public static FContainer _MetaContainer;
+	public static FSprite _MetaBackground;
+	public static FLabel _MetaText;
+	
+	public static FContainer _ItemContainer;
+	public static FSprite _ItemBackground;
+	public static FLabel _ItemText;
+	
+	public static FContainer _RunContainer;
+	public static FSprite _RunBackground;
+	public static FLabel _RunText;
 	
 	public static FContainer DrawPlayer(Player Player) {
 		
@@ -91,41 +115,161 @@ public static class UI {
 		return _PlayerBox;
 	}
 	
-	public static FButton _AttackButton;
-	public static FButton _MetaButton;
-	public static FContainer DrawMenuBox(bool Draw) {
+	
+	public static FContainer DrawMenuBox() {
 		_MenuBox = new FContainer();
+		
+		_AttackContainer = new FContainer();
+		_SkillContainer = new FContainer();
+		_MetaContainer = new FContainer();
+		_ItemContainer = new FContainer();
+		_RunContainer = new FContainer();
 		
 		FSprite _MenuBackground = new FSprite("MenuBox");
 		
-		_AttackButton = new FButton("MenuButtonOff","MenuButtonOn");
-
-		_AttackButton.AddLabel("Normal","Attack",Color.black);
-		_AttackButton.anchorY=1;
-		_AttackButton.y= 178;
+		_AttackBackground = new FSprite("MenuButtonOff");
+		_AttackText = new FLabel("Normal","Attack");
+		_AttackText.color = Color.black;
 		
-		_MetaButton = new FButton("MenuButtonOff","MenuButtonOn");
-
-		_MetaButton.AddLabel("Normal","MetaMagic",Color.black);
-		_MetaButton.anchorY=1;
-		_MetaButton.y= 178 - 48;
+		_SkillBackground = new FSprite("MenuButtonOff");
+		_SkillText = new FLabel("Normal","Skills");
+		_SkillText.color = Color.black;
+		
+		_MetaBackground = new FSprite("MenuButtonOff");
+		_MetaText = new FLabel("Normal","MetaMagic");
+		_MetaText.color = Color.black;
+		
+		_ItemBackground = new FSprite("MenuButtonOff");
+		_ItemText = new FLabel("Normal","Item");
+		_ItemText.color = Color.black;
+		
+		_RunBackground = new FSprite("MenuButtonOff");
+		_RunText = new FLabel("Normal","Run");
+		_RunText.color = Color.black;
+		
+		_AttackContainer.AddChild (_AttackBackground);
+		_AttackContainer.AddChild (_AttackText);
+		
+		
+		_SkillContainer.AddChild (_SkillBackground);
+		_SkillContainer.AddChild (_SkillText);
+		
+		_MetaContainer.AddChild (_MetaBackground);
+		_MetaContainer.AddChild (_MetaText);
+		
+		_ItemContainer.AddChild (_ItemBackground);
+		_ItemContainer.AddChild (_ItemText);
+		
+		_RunContainer.AddChild (_RunBackground);
+		_RunContainer.AddChild (_RunText);
 		
 		
 		//Manipulate elements
 		_MenuBox.x = -350;
 		
+		const int MenuConst = 49;
+		
+		_AttackContainer.y = MenuConst*3+6;
+		_SkillContainer.y = MenuConst*2+6;
+		_MetaContainer.y = MenuConst*1+6;
+		_ItemContainer.y = +6;
+		_RunContainer.y = -(MenuConst*1)+6;
+		
+		
 		//add elements to _MenuBox
 		_MenuBox.AddChild (_MenuBackground);
-		_MenuBox.AddChild (_AttackButton);
-		_MenuBox.AddChild (_MetaButton);
-		
-		_MenuBox.isVisible = Draw;
+		_MenuBox.AddChild (_AttackContainer);
+		_MenuBox.AddChild (_SkillContainer);
+		_MenuBox.AddChild (_MetaContainer);
+		_MenuBox.AddChild (_ItemContainer);
+		_MenuBox.AddChild (_RunContainer);
 		
 		return _MenuBox;
 	}
 	
+		private static int _MenuSelection;
+	public static void SelectedMenuUp () {
+		_MenuSelection--;
+		ChangeMenuOption();
+	}
 	
+	public static void SelectedMenuDown () {
+		_MenuSelection++;
+		ChangeMenuOption();
+	}
 	
+	public static void ChangeMenuOption () {
+		if (_MenuSelection>4) _MenuSelection = 4;
+		if (_MenuSelection<0) _MenuSelection = 0;
+		switch (_MenuSelection){
+		case 0:
+			SelectedMenuOption (MenuOptions.Attack);
+			break;
+		case 1:
+			SelectedMenuOption (MenuOptions.Skills);
+			break;
+		case 2:
+			SelectedMenuOption (MenuOptions.MetaMagic);
+			break;
+		case 3:
+			SelectedMenuOption (MenuOptions.Items);
+			break;
+		case 4:
+			SelectedMenuOption (MenuOptions.Run);
+			break;
+			
+		}
+	}
+	
+	public static void SelectedMenuOption (MenuOptions Selected) {
+		//set all fsprite back to normal
+		_AttackBackground.SetElementByName ("MenuButtonOff");
+		_SkillBackground.SetElementByName ("MenuButtonOff");
+		_MetaBackground.SetElementByName ("MenuButtonOff");
+		_ItemBackground.SetElementByName ("MenuButtonOff");
+		_RunBackground.SetElementByName ("MenuButtonOff");
+		//change selected menuoption to fancy
+		switch (Selected) {
+		
+		case MenuOptions.Attack:
+			_AttackBackground.SetElementByName ("MenuButtonOn");
+			break;
+		case MenuOptions.Skills:
+			_SkillBackground.SetElementByName ("MenuButtonOn");
+			break;
+		case MenuOptions.MetaMagic:
+			_MetaBackground.SetElementByName ("MenuButtonOn");
+			break;
+		case MenuOptions.Items:
+			_ItemBackground.SetElementByName ("MenuButtonOn");
+			break;
+		case MenuOptions.Run:
+			_RunBackground.SetElementByName ("MenuButtonOn");
+			break;
+			
+		}
+	}
+	
+	public static void DoSelectedOption (Mobs caster, Mobs target) {
+		switch (_MenuSelection) {
+		case 0:
+			MovesManager.PerformMove (caster, target,Moves.Attack);
+			break;
+		case 1:
+			AddMessage ("Skills", "You have no skills");
+			break;
+		case 2:
+			AddMessage ("MetaMagic", "You have no metamagic");
+			break;
+		case 3:
+			AddMessage ("Items", "You have no items");
+			break;
+		case 4:
+			AddMessage ("Run","You are unable to run from this fight");
+			break;
+		}
+		
+	}
 	
 	public static FContainer DrawHealthBar(Mobs Enemy) {
 	
@@ -222,48 +366,16 @@ public static class UI {
 	
 	public static FContainer _SubMenu;
 	
-	
-	public static FButton _SubButton1;
-	public static FButton _SubButton2;
-	public static FButton _SubButton3;
-	public static FButton _SubButton4;
-	public static FButton _SubButton5;
-	public static FContainer SubMenuBox(string TextButton1, string TextButton2, string TextButton3, string TextButton4, string TextButton5) {
+
+	public static FContainer SubMenuBox() {
 		
 		_SubMenu = new FContainer();
 		
 		FSprite _SubBackground = new FSprite("MenuBox");
 		
-		_SubButton1 = new FButton("MenuButtonOff","MenuButtonOn");
-		_SubButton1.AddLabel ("Normal",TextButton1,Color.black);
-		_SubButton1.anchorY = 1;
-		_SubButton1.y= 178;
-		_SubButton2 = new FButton("MenuButtonOff","MenuButtonOn");
-		_SubButton2.AddLabel ("Normal",TextButton2,Color.black);
-		_SubButton2.anchorY = 1;
-		_SubButton2.y= 128;
-		_SubButton3 = new FButton("MenuButtonOff","MenuButtonOn");
-		_SubButton3.AddLabel ("Normal",TextButton3,Color.black);
-		_SubButton3.anchorY = 1;
-		_SubButton3.y= 78;
-		_SubButton4 = new FButton("MenuButtonOff","MenuButtonOn");
-		_SubButton4.AddLabel ("Normal",TextButton4,Color.black);
-		_SubButton4.anchorY = 1;
-		_SubButton4.y= 28;
-		_SubButton5 = new FButton("MenuButtonOff","MenuButtonOn");
-		_SubButton5.AddLabel ("Normal",TextButton5,Color.black);
-		_SubButton5.anchorY = 1;
-		_SubButton5.y= 28 - 50;
+
 		
-		
-		
-		_SubMenu.AddChild (_SubBackground);
-		_SubMenu.AddChild (_SubButton1);
-		_SubMenu.AddChild (_SubButton2);
-		_SubMenu.AddChild (_SubButton3);
-		_SubMenu.AddChild (_SubButton4);
-		_SubMenu.AddChild (_SubButton5);
-		
+
 		_SubMenu.x=-73;
 		_SubMenu.isVisible = false;
 		

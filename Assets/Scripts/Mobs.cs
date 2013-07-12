@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum ValidMobs {
+	Skeleton,
 	Knight,
-	Sniper,
-	Skeleton
+	Sniper
 }
 
 public class Mobs : FSprite {
@@ -25,6 +25,21 @@ public class Mobs : FSprite {
 		
 		switch (Name) {
 				
+			case ValidMobs.Skeleton:
+				name = "Skeleton";
+				MaxHP = 10;
+				CurHP = 10;
+				MaxMP = 2;
+				CurMP = 2;
+				Damage = 7;
+				Defense = 3;
+				moveList = new List<Moves>();
+				weightList = new List<int>();
+	    		moveList.Add(Moves.Wobble);
+	    		weightList.Add (15);	
+				moveList.Add(Moves.Attack);
+				weightList.Add (100);
+				break;
 				
 			case ValidMobs.Knight:
 				name = "Knight";
@@ -58,21 +73,7 @@ public class Mobs : FSprite {
 				weightList.Add (100);
 				break;
 				
-			case ValidMobs.Skeleton:
-				name = "Skeleton";
-				MaxHP = 10;
-				CurHP = 10;
-				MaxMP = 2;
-				CurMP = 2;
-				Damage = 7;
-				Defense = 3;
-				moveList = new List<Moves>();
-				weightList = new List<int>();
-	    		moveList.Add(Moves.Wobble);
-	    		weightList.Add (15);	
-				moveList.Add(Moves.Attack);
-				weightList.Add (100);
-				break;
+
 					
 				
 		}
