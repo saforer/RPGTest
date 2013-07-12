@@ -23,7 +23,6 @@ public class Player : Mobs {
 		Damage = 3;
 		Defense = 1;
 		moveList = new List<Moves>();
-  		moveList.Add(Moves.Attack);
   		moveList.Add(Moves.Wobble);
 		itemList = new List<string>();
 		itemList.Add ("Potion");

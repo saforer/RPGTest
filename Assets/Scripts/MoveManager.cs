@@ -13,17 +13,18 @@ public enum Moves
 public static class MovesManager
 {
   
-  
+	public static string MoveName;
+	
   public static void PerformMove(Mobs caster, Mobs target, Moves move)
   {
     switch(move)
     {
-      case Moves.Attack:
-        Attack(caster, target);
-        break;
-      case Moves.Wobble:
-        Wobble(caster, target);
-        break;
+		case Moves.Attack:
+        	Attack(caster, target);
+        	break;
+      	case Moves.Wobble:
+        	Wobble(caster, target);
+	        break;
     }
   }
   

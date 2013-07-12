@@ -107,12 +107,14 @@ public class RPGBattlePage : RPGPage {
 	void YouWin (FSprite _EnemySprite, Mobs MyEnemy)	{
 		_EnemySprite.SetElementByName ("Dead");
 		UI._MenuBox.isVisible = false;
+		UI._SubMenu.isVisible = false;
 		UI.AddMessage ("Killed",MyEnemy.name + " has died.");
 		Paused=true;
 	}
 
 	void YouDed ()	{
 		UI._MenuBox.isVisible = false;
+		UI._SubMenu.isVisible = false;
 		UI.AddMessage ("Dead",MyPlayer.FName + " has died");
 		Paused=true;
 	}
@@ -159,20 +161,26 @@ public class RPGBattlePage : RPGPage {
 	void Controls ()
 	{
 		if (Input.GetKeyDown(KeyCode.UpArrow)) {
-			UI.SelectedMenuUp();
+			UI.SelectedMenuUp(MyPlayer);
 		}
 		
 		if (Input.GetKeyDown(KeyCode.DownArrow)) {
-			UI.SelectedMenuDown();
+			UI.SelectedMenuDown(MyPlayer);
 		}
 		
 		if (Input.GetKeyDown (KeyCode.Return)) {
 			if (!boolEnemyTurn&&!Paused) {
-			UI.DoSelectedOption(MyPlayer, MyEnemy);
-			boolEnemyTurn=true;
+			boolEnemyTurn = UI.DoSelectedOption(MyPlayer, MyEnemy);
 			}
 		}
 	
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			
+		}
+		
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			
+		}
 	}
 		
 

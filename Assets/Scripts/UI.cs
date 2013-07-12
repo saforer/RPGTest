@@ -35,8 +35,10 @@ public static class UI {
 	public static FContainer _MessageBox;
 	public static FSprite _MessageBackground;
 	public static FContainer _MenuBox;
+	public static FContainer _SubMenu;
+	public static FSprite _SubBackground;
 	public static List<FContainer> messageList = new List<FContainer>();
-	
+	private static int _MenuSelection;	
 	public const int MaxMessages = 2;
 	
 	public static FContainer _AttackContainer;
@@ -184,20 +186,50 @@ public static class UI {
 		_MenuBox.AddChild (_ItemContainer);
 		_MenuBox.AddChild (_RunContainer);
 		
+		
 		return _MenuBox;
 	}
 	
-		private static int _MenuSelection;
-	public static void SelectedMenuUp () {
-		_MenuSelection--;
-		ChangeMenuOption();
+		public static FContainer SubMenuBox() {
+		
+		_SubMenu = new FContainer();
+		
+		_SubBackground = new FSprite("MenuBox");
+		
+
+		_SubMenu.AddChild(_SubBackground);
+
+		_SubMenu.x=-73;
+		_SubMenu.isVisible = false;
+		
+		return _SubMenu;
 	}
 	
-	public static void SelectedMenuDown () {
-		_MenuSelection++;
-		ChangeMenuOption();
+	static bool Menulock;
+	static int _SubSelection = 0;
+	public static void SelectedMenuUp (Player caster) {
+		
+		if (!Menulock) {
+			_MenuSelection--;
+			ChangeMenuOption();
+		}
+		if (Menulock) {
+			_SubSelection--;
+			ChangeSubOption(MenuOpen, caster);
+		}
 	}
 	
+	public static void SelectedMenuDown (Player caster) {
+		if (!Menulock) {
+			_MenuSelection++;
+			ChangeMenuOption();
+		}
+		if (Menulock) {
+			_SubSelection++;
+			ChangeSubOption(MenuOpen, caster);
+		}
+	}
+
 	public static void ChangeMenuOption () {
 		if (_MenuSelection>4) _MenuSelection = 4;
 		if (_MenuSelection<0) _MenuSelection = 0;
@@ -220,6 +252,7 @@ public static class UI {
 			
 		}
 	}
+	
 	
 	public static void SelectedMenuOption (MenuOptions Selected) {
 		//set all fsprite back to normal
@@ -250,22 +283,102 @@ public static class UI {
 		}
 	}
 	
-	public static void DoSelectedOption (Mobs caster, Mobs target) {
+	public static bool DoSelectedOption (Player caster, Mobs target) {
+		bool DoIGiveTheEnemyATurn = false;
 		switch (_MenuSelection) {
 		case 0:
 			MovesManager.PerformMove (caster, target,Moves.Attack);
+			DoIGiveTheEnemyATurn = true;
 			break;
 		case 1:
-			AddMessage ("Skills", "You have no skills");
+			
+			OpenSkillsMenu(MenuOptions.Skills, caster);
 			break;
 		case 2:
 			AddMessage ("MetaMagic", "You have no metamagic");
+			OpenItemMenu(MenuOptions.MetaMagic, caster);
 			break;
 		case 3:
-			AddMessage ("Items", "You have no items");
+			OpenItemMenu(MenuOptions.Items, caster);
 			break;
 		case 4:
 			AddMessage ("Run","You are unable to run from this fight");
+			DoIGiveTheEnemyATurn = true;
+			break;
+		}
+		return DoIGiveTheEnemyATurn;
+		
+	}
+	
+		public static void OpenSkillsMenu (MenuOptions Open, Player caster) {
+		Menulock = true;
+		_SubMenu.isVisible = true;
+		int skillMax = 7;
+		if (caster.moveList.Count<7) skillMax = caster.moveList.Count;
+		
+		for (int n = 0; n<skillMax; n++) {
+			FContainer _SubOption = new FContainer();
+			FSprite _OptionBack = new FSprite("MenuButtonOff");
+			FLabel _OptionText = new FLabel("Normal",caster.moveList[n].ToString());
+			_SubOption.y=153+((-n)*49);
+			_SubOption.AddChild (_OptionBack);
+			_SubOption.AddChild (_OptionText);
+			_SubMenu.AddChild(_SubOption);
+		}
+		
+		
+		
+	}
+	public static List<FSprite> itemSpriteList;
+	public static string ItemName;
+	public static void OpenItemMenu (MenuOptions Open, Player caster) {
+		Menulock = true;
+		_ItemBackground.SetElementByName("MenuButtonLock");
+		_SubMenu.isVisible = true;
+		int itemMax = 7;
+		if (caster.itemList.Count<7) itemMax = caster.itemList.Count-1;
+		itemSpriteList = new List<FSprite>();
+		
+		for (int n = 0; n<itemMax; n++) {
+			FContainer _SubOption = new FContainer();
+			FSprite _OptionBack = new FSprite("MenuButtonOff");
+			ItemName = caster.itemList[n];
+			if (ItemName.Equals (null)) ItemName = " ";
+			FLabel _OptionText = new FLabel("Normal",ItemName);
+			_SubOption.y=153+((-n)*49);
+			_SubOption.AddChild (_OptionBack);
+			_SubOption.AddChild (_OptionText);
+			_SubMenu.AddChild(_SubOption);
+			
+			itemSpriteList.Add (_OptionBack);
+		}	
+		_SubSelection = 0;
+		MenuOpen = MenuOptions.Items;
+		
+		ChangeSubOption(MenuOpen, caster);
+		
+	}
+	public static MenuOptions MenuOpen;
+	
+	
+	public static void ChangeSubOption(MenuOptions Open, Player caster) {
+	
+		switch (Open) {
+		case MenuOptions.Items:
+			if (_SubSelection>caster.itemList.Count) _SubSelection = caster.itemList.Count-1;
+			
+			if (_SubSelection<0) _SubSelection = 0;
+			
+			foreach (FSprite name in itemSpriteList) {
+				name.SetElementByName ("MenuButtonOff");
+			}
+			itemSpriteList[_SubSelection].SetElementByName ("MenuButtonOn");			
+			break;
+		case MenuOptions.MetaMagic:
+			
+			break;
+		case MenuOptions.Skills:
+			
 			break;
 		}
 		
@@ -364,24 +477,9 @@ public static class UI {
 		return _MessageBox;
 	}
 	
-	public static FContainer _SubMenu;
 	
 
-	public static FContainer SubMenuBox() {
-		
-		_SubMenu = new FContainer();
-		
-		FSprite _SubBackground = new FSprite("MenuBox");
-		
 
-		
-
-		_SubMenu.x=-73;
-		_SubMenu.isVisible = false;
-		
-		return _SubMenu;
-	}
-	
 	public static void UpdateEnemyInfobox (Mobs Enemy) {
 		_ECurHP.text = "Cur HP:" + Enemy.CurHP;
 		_EMaxHP.text = "Max HP: " + Enemy.MaxHP;
