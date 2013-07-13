@@ -65,7 +65,7 @@ public static class UI {
 	static int _SubSelection = 0;
 	
 	public static List<FSprite> itemSpriteList;
-	public static string ItemName;
+	public static ValidItems ItemName;
 	public static FContainer _SubOption;
 	public static FSprite _OptionBack;
 	public static FLabel _OptionText;
@@ -351,7 +351,9 @@ public static class UI {
 	
 	public static void DoUseItem (Player caster, Mobs target) {
 		ItemName = caster.itemList[_SubSelection];
-		AddMessage(ItemName,"You used " + ItemName);
+		Item.UseItem (caster,caster,ItemName);
+		AddMessage(ItemName.ToString(),"You used " + ItemName.ToString());
+		caster.itemList.RemoveAt (_SubSelection);
 		CloseSubMenu();
 	}
 	
@@ -438,8 +440,7 @@ public static class UI {
 			 _SubOption = new FContainer();
 			_OptionBack = new FSprite("MenuButtonOff");
 			ItemName = caster.itemList[n];
-			if (ItemName.Equals (null)) ItemName = " ";
-			_OptionText = new FLabel("Normal",ItemName);
+			_OptionText = new FLabel("Normal",ItemName.ToString ());
 			_SubOption.y=153+((-n)*49);
 			_SubOption.AddChild (_OptionBack);
 			_SubOption.AddChild (_OptionText);

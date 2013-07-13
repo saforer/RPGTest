@@ -14,7 +14,6 @@ public enum Moves
 public static class MovesManager
 {
   
-	public static string MoveName;
 	
   public static void PerformMove(Mobs caster, Mobs target, Moves move)
   {

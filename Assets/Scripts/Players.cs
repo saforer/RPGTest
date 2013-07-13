@@ -9,7 +9,7 @@ public class Player : Mobs {
 	public string FName;
 	public string LName;
 	
-	public List<string> itemList;
+	public List<ValidItems> itemList;
 	public List<Moves> metaList;
 	
 	public Player () {
@@ -33,14 +33,8 @@ public class Player : Mobs {
 		metaList.Add(Moves.Flamethrower);
 		
 		
-		itemList = new List<string>();
-		itemList.Add ("Potion");
-		itemList.Add ("Potion");
-		itemList.Add ("Potion");
-		itemList.Add ("Potion");
-		itemList.Add ("Waffles");
-		itemList.Add ("Pancakes");
-		itemList.Add ("Maple Syrup");
+		itemList = new List<ValidItems>();
+		itemList.Add (ValidItems.Potion);
 	}
 }
 
