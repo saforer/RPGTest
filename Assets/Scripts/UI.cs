@@ -436,18 +436,20 @@ public static class UI {
 		if (caster.itemList.Count<7) itemMax = caster.itemList.Count;
 		itemSpriteList = new List<FSprite>();
 		
-		for (int n = 0; n<itemMax; n++) {
-			 _SubOption = new FContainer();
-			_OptionBack = new FSprite("MenuButtonOff");
-			ItemName = caster.itemList[n];
-			_OptionText = new FLabel("Normal",ItemName.ToString ());
-			_SubOption.y=153+((-n)*49);
-			_SubOption.AddChild (_OptionBack);
-			_SubOption.AddChild (_OptionText);
-			_SubMenu.AddChild(_SubOption);
-			
-			itemSpriteList.Add (_OptionBack);
-		}	
+		if (caster.itemList.Count>0) {
+			for (int n = 0; n<itemMax; n++) {
+				 _SubOption = new FContainer();
+				_OptionBack = new FSprite("MenuButtonOff");
+				ItemName = caster.itemList[n];
+				_OptionText = new FLabel("Normal",ItemName.ToString ());
+				_SubOption.y=153+((-n)*49);
+				_SubOption.AddChild (_OptionBack);
+				_SubOption.AddChild (_OptionText);
+				_SubMenu.AddChild(_SubOption);
+				
+				itemSpriteList.Add (_OptionBack);
+			}	
+		}
 		_SubSelection = 0;
 		MenuOpen = MenuOptions.Items;
 		

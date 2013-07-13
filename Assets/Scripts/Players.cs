@@ -34,7 +34,6 @@ public class Player : Mobs {
 		
 		
 		itemList = new List<ValidItems>();
-		itemList.Add (ValidItems.Potion);
 	}
 }
 
