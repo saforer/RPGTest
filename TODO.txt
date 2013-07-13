@@ -1,0 +1,25 @@
+make an item class that holds variables for items (name price) and what they do
+
+make turn list that you add too and subtract from to actually work the turns
+
+add clickmenu
+
+add targeting system
+
+add multiple enemies
+
+add multiple players
+
+add overworld tileset system
+
+add title screen
+
+add more enemies
+
+add more moves
+
+add metamagic
+
+draw actual sprites instead of using oryx's spritesheet
+
+Redraw UI so it isn't just boxes

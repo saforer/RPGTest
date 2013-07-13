@@ -33,12 +33,16 @@ public class Mobs : FSprite {
 				CurMP = 2;
 				Damage = 7;
 				Defense = 3;
+			
 				moveList = new List<Moves>();
 				weightList = new List<int>();
 	    		moveList.Add(Moves.Wobble);
 	    		weightList.Add (15);	
+				moveList.Add (Moves.Flamethrower);
+				weightList.Add (20);
 				moveList.Add(Moves.Attack);
 				weightList.Add (100);
+			
 				break;
 				
 			case ValidMobs.Knight:

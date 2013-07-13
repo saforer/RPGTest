@@ -175,7 +175,7 @@ public class RPGBattlePage : RPGPage {
 		}
 	
 		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			
+			UI.CloseSubMenu();
 		}
 		
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {

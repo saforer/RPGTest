@@ -10,8 +10,13 @@ public class Player : Mobs {
 	public string LName;
 	
 	public List<string> itemList;
+	public List<Moves> metaList;
 	
 	public Player () {
+		moveList = new List<Moves>();
+		metaList = new List<Moves>();
+		
+		
 		
 		name = "Player";
 		FName = "Var";
@@ -22,8 +27,12 @@ public class Player : Mobs {
 		CurMP = 10;
 		Damage = 3;
 		Defense = 1;
-		moveList = new List<Moves>();
+		
   		moveList.Add(Moves.Wobble);
+		
+		metaList.Add(Moves.Flamethrower);
+		
+		
 		itemList = new List<string>();
 		itemList.Add ("Potion");
 		itemList.Add ("Potion");
@@ -31,6 +40,7 @@ public class Player : Mobs {
 		itemList.Add ("Potion");
 		itemList.Add ("Waffles");
 		itemList.Add ("Pancakes");
+		itemList.Add ("Maple Syrup");
 	}
 }
 
