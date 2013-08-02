@@ -7,8 +7,7 @@ using System.Collections.Generic;
 public enum Moves
   {
     Attack,
-    Wobble,
-	Flamethrower
+    Wobble
   }
 
 public static class MovesManager
@@ -25,9 +24,6 @@ public static class MovesManager
       	case Moves.Wobble:
         	Wobble(caster, target);
 	        break;
-		case Moves.Flamethrower:
-			Flamethrower (caster,target);
-			break;
     }
   }
   
@@ -55,33 +51,6 @@ public static class MovesManager
 		
   }
 	
-	public static void Flamethrower(Mobs caster, Mobs target) {
-	int Damage = (caster.Damage/3 - target.Defense);
-	
-		
-		if(Damage<1) {
-			Damage=1;
-		}
-		if(target.CurHP>0)	{
-			target.CurHP -= Damage;
-			UI.AddMessage ("Flamethrower", caster.name + " has Attacked for " + Damage);
-		}
-		if(Damage<1) {
-			Damage=1;
-		}
-		if(target.CurHP>0)	{
-			target.CurHP -= Damage;
-			UI.AddMessage ("Flamethrower", caster.name + " has Attacked for " + Damage);
-		}
-		if(Damage<1) {
-			Damage=1;
-		}
-		if(target.CurHP>0)	{
-			target.CurHP -= Damage;
-			UI.AddMessage ("Flamethrower", caster.name + " has Attacked for " + Damage);
-		}
-		
-	}
 	
 	
 }

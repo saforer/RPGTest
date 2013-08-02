@@ -18,6 +18,7 @@ public class Mobs : FSprite {
 	public int CurMP;
 	public int Damage;
 	public int Defense;
+	public int Speed;
 	public List<Moves> moveList;
 	public List<int> weightList;
 	
@@ -33,13 +34,11 @@ public class Mobs : FSprite {
 				CurMP = 2;
 				Damage = 7;
 				Defense = 3;
-			
+				Speed = 10;
 				moveList = new List<Moves>();
 				weightList = new List<int>();
 	    		moveList.Add(Moves.Wobble);
 	    		weightList.Add (15);	
-				moveList.Add (Moves.Flamethrower);
-				weightList.Add (20);
 				moveList.Add(Moves.Attack);
 				weightList.Add (100);
 			
@@ -53,10 +52,11 @@ public class Mobs : FSprite {
 				CurMP = 10;
 				Damage = 2;
 				Defense = 5;
+				Speed = 10;
 				moveList = new List<Moves>();
 				weightList = new List<int>();
 	    		moveList.Add(Moves.Wobble);
-				weightList.Add (50);
+				weightList.Add (10);
 	    		moveList.Add(Moves.Attack);
 				weightList.Add (100);
 				break;
@@ -69,6 +69,7 @@ public class Mobs : FSprite {
 				CurMP = 10;
 				Damage = 5;
 				Defense = 2;
+				Speed = 10;
 				moveList = new List<Moves>();
 				weightList = new List<int>();
 				moveList.Add (Moves.Wobble);

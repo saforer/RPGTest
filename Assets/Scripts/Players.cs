@@ -15,8 +15,12 @@ public class Player : Mobs {
 	public Player () {
 		moveList = new List<Moves>();
 		metaList = new List<Moves>();
+		itemList = new List<ValidItems>();
 		
+		moveList.Add (Moves.Wobble);
 		
+		itemList.Add (ValidItems.Potion);
+		itemList.Add (ValidItems.Potion);
 		
 		name = "Player";
 		FName = "Var";
@@ -27,13 +31,9 @@ public class Player : Mobs {
 		CurMP = 10;
 		Damage = 3;
 		Defense = 1;
-		
-  		moveList.Add(Moves.Wobble);
-		
-		metaList.Add(Moves.Flamethrower);
+		Speed = 11;
 		
 		
-		itemList = new List<ValidItems>();
 	}
 }
 

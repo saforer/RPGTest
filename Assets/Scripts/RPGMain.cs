@@ -44,27 +44,32 @@ public class RPGMain : MonoBehaviour {
 		
 		_stage = Futile.stage;
 		
-		GoToPage(RPGPageType.BattlePage);
+		GoToPage(RPGPageType.TitlePage, 0) ;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+		
 	}
 	
 
 
-	public void GoToPage (RPGPageType pageType)
+	public void GoToPage (RPGPageType pageType, int EnemyToUse)
 	{
 		if(_currentPageType == pageType) return; //we're already on the same page, so don't bother doing anything
 
 		RPGPage pageToCreate = null;
 
 		//TODO:RPGTITLEPAGE
+		if (pageType == RPGPageType.TitlePage)
+		{
+			pageToCreate = new RPGTitlePage();
+		}
 		//TODO:RPGINGAMEPAGE
 		if (pageType == RPGPageType.BattlePage)
 		{
-			pageToCreate = new RPGBattlePage();
+			pageToCreate = new RPGBattlePage(EnemyToUse);
 		}
 
 		if(pageToCreate != null) //destroy the old page and create a new one

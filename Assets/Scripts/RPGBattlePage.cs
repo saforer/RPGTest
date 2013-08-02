@@ -3,29 +3,27 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class RPGBattlePage : RPGPage {
 	
 	FSprite _BattleBackground;
 	public Player MyPlayer;	
 	public Mobs MyEnemy;
 	public FContainer _UI;
-	bool boolEnemyTurn = false;
 	public static int Framecount;
 	bool Paused = false;
-	
-	//Controls stuff
-	//bool _KeyUp = false;
-	//bool _KeyDown = false;
+	bool Acted = false;
 	
 	
-	public RPGBattlePage () {
+	
+	public RPGBattlePage (int EnemyToUse) {
 		//Draw Background
 		DrawBackground();
 		
 		//construct player
 		ConstructPlayer();
 		//construct enemy
-		ConstructEnemy();
+		ConstructEnemy(EnemyToUse);
 		//Draw Enemy
 		DrawEnemy(MyEnemy);
 		//Draw UI
@@ -53,7 +51,24 @@ public class RPGBattlePage : RPGPage {
 	}
 	
 		
+	public void ConstructPlayer () {
+		MyPlayer = new Player();
+	}
 
+	public void ConstructEnemy (int EnemyToUse) 	{	
+		Debug.Log (EnemyToUse);
+		switch (EnemyToUse-1) {
+		case 0:
+			MyEnemy = new Mobs(ValidMobs.Sniper);
+			break;
+		case 1:	
+			MyEnemy = new Mobs(ValidMobs.Knight);
+			break;
+		case 2:
+			MyEnemy = new Mobs(ValidMobs.Skeleton);
+			break;
+		}
+	}
 
 		FSprite _EnemySprite;
 	private void DrawEnemy(Mobs MyEnemy) {
@@ -68,26 +83,18 @@ public class RPGBattlePage : RPGPage {
 		UI.UpdateEnemyInfobox(MyEnemy);
 		UI.UpdatePlayer (MyPlayer);
 		UI.UpdateEnemyHealth (MyEnemy);
+		UI.UpdateMenu (MyPlayer);
 		Framecount++;
 		
 		Controls();
 		
-		//TODO: Just call enemyturn from the move framework when it's set up
-		if(boolEnemyTurn) {
+		if(Acted){
 		EnemyTurn(MyEnemy);
+		UI.PhaseShift();	
 		}
 		
-		if(MyEnemy.CurHP <= 0&&!Paused) {
-			MyEnemy.CurHP = 0;
-			YouWin(_EnemySprite, MyEnemy);
-			Paused = true;
-		}
-		
-		if (MyPlayer.CurHP <= 0&&!Paused) {
-			MyPlayer.CurHP = 0;
-			YouDed();
-			Paused = true;
-		}
+		if (MyPlayer.CurHP==0&&!Paused) {YouDed();};
+		if (MyEnemy.CurHP==0&&!Paused) {YouWin (_EnemySprite, MyEnemy);};
 		
 	}
 	
@@ -98,10 +105,9 @@ public class RPGBattlePage : RPGPage {
 		//Get what move he should do out of the list
 		int MoveToUse = FindMoveToUse(MyEnemy,MyPlayer);
 		//actually use the move.
-		Debug.Log(MoveToUse);
 			MovesManager.PerformMove (MyEnemy,MyPlayer,Enemy.moveList[MoveToUse]);
-		
-		boolEnemyTurn = false;
+		UI.PhaseShift();
+		Acted = false;
 	}
 
 	void YouWin (FSprite _EnemySprite, Mobs MyEnemy)	{
@@ -119,27 +125,7 @@ public class RPGBattlePage : RPGPage {
 		Paused=true;
 	}
 
-	public void ConstructPlayer () {
-		MyPlayer = new Player();
-	}
 
-	public void ConstructEnemy ()
-	{	
-		int MaxEnum = Enum.GetNames(typeof(ValidMobs)).Length;
-		int n = UnityEngine.Random.Range (0,MaxEnum);
-		Debug.Log (n);
-		switch (n) {
-		case 0:
-			MyEnemy = new Mobs(ValidMobs.Sniper);
-			break;
-		case 1:	
-			MyEnemy = new Mobs(ValidMobs.Knight);
-			break;
-		case 2:
-			MyEnemy = new Mobs(ValidMobs.Skeleton);
-			break;
-		}
-	}
 	
 	int FindMoveToUse(Mobs MyEnemy, Mobs MyPlayer) {
 		int MoveToUse = 0;
@@ -169,8 +155,8 @@ public class RPGBattlePage : RPGPage {
 		}
 		
 		if (Input.GetKeyDown (KeyCode.Return)) {
-			if (!boolEnemyTurn&&!Paused) {
-			boolEnemyTurn = UI.DoSelectedOption(MyPlayer, MyEnemy);
+			if (!Acted&&!Paused) {
+			Acted = UI.DoSelectedOption(MyPlayer, MyEnemy);
 			}
 		}
 	

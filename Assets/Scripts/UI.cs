@@ -11,9 +11,18 @@ public enum MenuOptions {
 	Run
 }
 
+
+public enum BattlePhase {
+	PlayerPhase,
+	EnemyPhase
+}
+
 public static class UI {
 	
-
+	//what phase is it state machine
+	public static BattlePhase _CurrentPhase = BattlePhase.PlayerPhase;
+	
+	//player stuffs
 	public static FSprite _PBackground;
 	public static FContainer _PlayerBox;
 	public static FSprite _PlayerSprite;
@@ -23,6 +32,8 @@ public static class UI {
 	public static FContainer _PlayerInfo;
 	public static FLabel _PlayerHP;
 	public static FLabel _PlayerMP;
+	
+	//enemy stuffs
 	public static FLabel _ECurHP;
 	public static FLabel _EMaxHP;
 	public static FLabel _ECurMP;
@@ -32,51 +43,75 @@ public static class UI {
 	public static FContainer _EHealthBar;
 	public static FSprite _EHealthBack;
 	public static FSprite _EHealthFill;
+	
+	//message stuff
 	public static FContainer _MessageBox;
 	public static FSprite _MessageBackground;
-	public static FContainer _MenuBox;
-	public static FContainer _SubMenu;
-	public static FSprite _SubBackground;
 	public static List<FContainer> messageList = new List<FContainer>();
-	private static int _MenuSelection;	
 	public const int MaxMessages = 2;
 	
+	
+	//menu box stuff
+	public static FContainer _MenuBox;
+	private static int _MenuSelection;	
+	
+	static bool Menulock;
+		
+	
+	//sub menu stuff
+	public static FContainer _SubMenu;
+	public static FSprite _SubBackground;
+	static int _SubSelection = 0;
+	public static FContainer _SubOption;
+	public static FSprite _OptionBack;
+	public static FLabel _OptionText;
+	public static MenuOptions MenuOpen;
+
+	
+	//Attack box
 	public static FContainer _AttackContainer;
 	public static FSprite _AttackBackground;
 	public static FLabel _AttackText;
 	
+	//skill box
 	public static FContainer _SkillContainer;
 	public static FSprite _SkillBackground;
 	public static FLabel _SkillText;
+	public static string MoveName;
+	public static List<FSprite> skillSpriteList;
 	
+	//metamagic box
 	public static FContainer _MetaContainer;
 	public static FSprite _MetaBackground;
 	public static FLabel _MetaText;
+	public static int metaMax;
+	public static string MetaName;
+	public static List<FSprite> metaSpriteList;
 	
+	
+	//item box
 	public static FContainer _ItemContainer;
 	public static FSprite _ItemBackground;
 	public static FLabel _ItemText;
+	public static List<FSprite> itemSpriteList;
+	public static ValidItems ItemName;
 	
+	
+	//run box
 	public static FContainer _RunContainer;
 	public static FSprite _RunBackground;
 	public static FLabel _RunText;
+
 	
-	static bool Menulock;
-	static int _SubSelection = 0;
 	
-	public static List<FSprite> itemSpriteList;
-	public static ValidItems ItemName;
-	public static FContainer _SubOption;
-	public static FSprite _OptionBack;
-	public static FLabel _OptionText;
-		public static string MoveName;
 	
-		public static int metaMax;
-	public static string MetaName;
 	
-		public static MenuOptions MenuOpen;
-	public static List<FSprite> metaSpriteList;
-	public static List<FSprite> skillSpriteList;
+	
+	
+	
+	
+
+	
 	
 	
 	
@@ -299,43 +334,45 @@ public static class UI {
 	}
 	
 	public static bool DoSelectedOption (Player caster, Mobs target) {
-		bool DoIGiveTheEnemyATurn = false;
-		if (!Menulock) {
-			switch (_MenuSelection) {
-			case 0:
-				MovesManager.PerformMove (caster, target,Moves.Attack);
-				DoIGiveTheEnemyATurn = true;
-				break;
-			case 1:
-				OpenSkillsMenu(MenuOptions.Skills, caster);
-				break;
-			case 2:
-				OpenMetaMenu(MenuOptions.MetaMagic, caster);
-				break;
-			case 3:
-				OpenItemMenu(MenuOptions.Items, caster);
-				break;
-			case 4:
-				AddMessage ("Run","You are unable to run from this fight");
-				DoIGiveTheEnemyATurn = true;
-				break;
-			}
-		} else {
-			switch (MenuOpen) {
-				case MenuOptions.Items:	
-					DoUseItem(caster, target);
-					break;
-				case MenuOptions.MetaMagic:
-					DoUseMeta(caster, target);
-					break;
-				case MenuOptions.Skills:
-					DoUseSkill(caster, target);
-					break;
-					
-			}		
-			DoIGiveTheEnemyATurn = true;
+		bool Acted = false;
+		if (_CurrentPhase==BattlePhase.PlayerPhase) {
+			if (Menulock==false) {
+				switch (_MenuSelection) {
+					case 0:
+						MovesManager.PerformMove (caster, target,Moves.Attack);
+						Acted = true;
+						break;
+					case 1:
+						if (caster.moveList.Count>0) OpenSkillsMenu(MenuOptions.Skills, caster);
+						break;
+					case 2:
+						if (caster.metaList.Count>0) OpenMetaMenu(MenuOptions.MetaMagic, caster);
+						break;
+					case 3:
+						if (caster.itemList.Count>0) OpenItemMenu(MenuOptions.Items, caster);
+						break;
+					case 4:
+						AddMessage ("Run","You are unable to run from this fight");
+						Acted = true;
+						break;
+					}
+			} else {
+				switch (MenuOpen) {
+					case MenuOptions.Items:	
+						DoUseItem(caster, target);
+						break;
+					case MenuOptions.MetaMagic:
+						DoUseMeta(caster, target);
+						break;
+					case MenuOptions.Skills:
+						DoUseSkill(caster, target);
+						break;
+						
+				}
+				Acted = true;
+			}	
 		}
-		return DoIGiveTheEnemyATurn;
+		return Acted;
 		
 	}
 	
@@ -638,6 +675,18 @@ public static class UI {
 		_EHealthFill.scaleX = ((float) Enemy.CurHP / (float) Enemy.MaxHP);
 	}
 	
+	public static void UpdateMenu (Player MyPlayer) {
+		if (MyPlayer.moveList.Count==0) {
+		_SkillText.text = "No Skills";
+		}
+		if (MyPlayer.metaList.Count==0) {
+		_MetaText.text = "No MetaMagic";
+		}
+		if (MyPlayer.itemList.Count==0) {
+		_ItemText.text = "No Items";
+		}
+	}
+	
 	
 	public static void AddMessage (string Title, string Text) {
 			
@@ -687,4 +736,20 @@ public static class UI {
 		_MessageBox.AddChild (_MessageToAdd);
 		
 	}
+	
+	public static void PhaseShift() {
+		if (_CurrentPhase == BattlePhase.PlayerPhase) {
+			_MenuBox.isVisible = false;
+			_SubMenu.isVisible = false;
+			
+			_CurrentPhase = BattlePhase.EnemyPhase;
+		} 
+		else if (_CurrentPhase == BattlePhase.EnemyPhase) {
+			_MenuBox.isVisible = true;
+			_SubMenu.isVisible = true;
+			
+			_CurrentPhase = BattlePhase.PlayerPhase;
+		}
+	}
+
 }
